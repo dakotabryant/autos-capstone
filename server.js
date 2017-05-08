@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const passport = require('passport');
 const {BasicStrategy} = require('passport-http');
 const {DATABASE_URL, PORT} = require('./config.js');
+const {CarListing} = require('./models.js');
 
 const app = express();
 
@@ -35,40 +36,41 @@ const strategy = new BasicStrategy(function(username, password, callback) {
 
 passport.use(strategy);
 
-app.get('/', (req, res) => {
-  res.status(201).json('Hey wassup, it is working');
+app.get('/cars', (req, res) => {
+  //bound to the first get request
+  //shows a list of all the cars in the DB
+  //also bound to the "view inventory" button
+  //will require user to be logged in
+  CarListing
+  .find()
+  .exec()
+  .then(listings => {
+    res.json(listings);
+  })
 })
 
+app.post('/create-car', (req, res) => {
+  //figure out how to send a picture
+  //will require user to be logged in
+  CarListing
+  .create({make: req.body.make, model: req.body.model, year: req.body.year, price: req.body.price, photo: req.body.photo})
+  .then(car => {
+    res.json(car);
+  })
+})
+app.put('/cars/:id', (req, res) => {
+  //edits the specified car
+  //linked to the edit button
+  //can edit any field and then save
+  //will require user to be logged in
+  //confirm the user's submission before they truly submit
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+})
+app.delete('/cars/:id', (req, res) => {
+  //deletes the specified car
+  //linked to delete button
+  //will require user to be logged in
+})
 
 
 
