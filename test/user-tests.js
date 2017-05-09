@@ -17,7 +17,27 @@ const {
 
 chai.use(chaiHttp);
 
+function seedData() {
+  let data = [];
+  for (let i = 0; i < 10; i++) {
+    data.push(generateCarPost());
+  }
+  return BlogPost.insertMany(data);
+}
+
 describe('Autos.com testing suite', function() {
+	before(function () {
+		return runServer(DATABASE_URL);
+	});
+	beforeEach(function () {
+		return Promise.all([seedData(), seedUserData()]);
+	});
+	afterEach(function () {
+		return tearDownDb();
+	});
+	after(function () {
+		return closeServer();
+	});
 
 		describe('GET endpoints', function() {
 			it('should return the full list of cars available', function() {
@@ -26,7 +46,6 @@ describe('Autos.com testing suite', function() {
 				.then(function(res) {
 					res.status.should.be(200);
 				})
-				.done();
 			})
 		});
 });
