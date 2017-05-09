@@ -53,7 +53,7 @@ app.get('/cars', (req, res) => {
   })
 })
 
-app.post('/create-car', (req, res) => {
+app.post('/cars', (req, res) => {
   //figure out how to send a picture
   //will require user to be logged in
   CarListing
