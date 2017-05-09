@@ -25,8 +25,7 @@ const carListingSchema = mongoose.Schema({
     default: Date.now
   },
   photo: {
-    type: String,
-    required: true
+    type: String
   }
 })
 

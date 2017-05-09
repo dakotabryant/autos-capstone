@@ -47,6 +47,10 @@ app.get('/cars', (req, res) => {
   .then(listings => {
     res.json(listings);
   })
+  .catch(err => {
+    console.log(err);
+    res.status(500).json({error: 'Someone messed up. 🚫 🙅'})
+  })
 })
 
 app.post('/create-car', (req, res) => {
@@ -57,6 +61,10 @@ app.post('/create-car', (req, res) => {
   .then(car => {
     res.json(car);
   })
+  .catch(err => {
+    console.log(err);
+    res.status(500).json({error: 'Someone messed up. 🚫 🙅'})
+  })
 })
 app.put('/cars/:id', (req, res) => {
   //edits the specified car
@@ -64,7 +72,6 @@ app.put('/cars/:id', (req, res) => {
   //can edit any field and then save
   //will require user to be logged in
   //confirm the user's submission before they truly submit
-
 })
 app.delete('/cars/:id', (req, res) => {
   //deletes the specified car
