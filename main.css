@@ -1,0 +1,34 @@
+@import url("https://fonts.googleapis.com/css?family=Fjalla+One|Montserrat|Roboto+Condensed");
+* {
+  transition: ease-in-out .2s; }
+
+.uppercase {
+  text-transform: uppercase; }
+
+header {
+  height: 90px;
+  background-color: black; }
+  header .logo {
+    color: white;
+    position: absolute;
+    top: 35px;
+    left: 25px; }
+
+.inventory-container {
+  margin-top: 50px; }
+  .inventory-container .inventory-row {
+    display: flex;
+    justify-content: space-around; }
+    .inventory-container .inventory-row .car-container img {
+      width: 150px; }
+
+@font-face {
+  font-family: 'BTC';
+  src: url("assets/brushtip-C TRIAL/BTCTRIAL.ttf"); }
+
+body {
+  font-family: 'Roboto Condensed', sans-serif;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+  box-sizing: border-box; }

@@ -1,10 +1,11 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
-const passport = require('passport');
-const {BasicStrategy} = require('passport-http');
-const {DATABASE_URL, PORT} = require('./config.js');
-const {CarListing} = require('./models.js');
+const express = require('express'),
+      mongoose = require('mongoose'),
+      bodyParser = require('body-parser'),
+      passport = require('passport'),
+      {BasicStrategy} = require('passport-http'),
+      {DATABASE_URL, PORT} = require('./config.js'),
+      {CarListing} = require('./models.js'),
+      {makeGenerator, modelGenerator, yearGenerator, priceGenerator} = require('./scripts/randomgenerator.js');
 
 const app = express();
 
@@ -52,10 +53,27 @@ app.get('/cars', (req, res) => {
     res.status(500).json({error: 'Someone messed up. 🚫 🙅'})
   })
 })
+app.get('/cars/:id', (req, res) => {
+  CarListing
+  .findById(req.params.id)
+  .exec()
+  .then(car => {
+    res.status(200).json(car);
+  })
+})
 
 app.post('/cars', (req, res) => {
   //figure out how to send a picture
   //will require user to be logged in
+  const requiredFields = ['make', 'model', 'year', 'price']
+  for (var i = 0; i < requiredFields.length; i++) {
+    const field = requiredFields[i];
+    if(!(field in req.body)){
+      const message = `Missing ${field} in request body`;
+			console.error(message);
+			return res.status(400).send(message);
+    }
+  }
   CarListing
   .create({make: req.body.make, model: req.body.model, year: req.body.year, price: req.body.price, photo: req.body.photo})
   .then(car => {
@@ -67,25 +85,43 @@ app.post('/cars', (req, res) => {
   })
 })
 app.put('/cars/:id', (req, res) => {
-  //edits the specified car
   //linked to the edit button
   //can edit any field and then save
   //will require user to be logged in
   //confirm the user's submission before they truly submit
+  const updatedEntry = {};
+  const editableFields = ['make', 'model', 'year', 'price', 'photo'];
+  editableFields.forEach(field => {
+    if (field in req.body) {
+      updatedEntry[field] = req.body[field];
+    }
+  });
+  CarListing
+  .findByIdAndUpdate(req.params.id, {$set: updatedEntry}, {new: true})
+  .exec()
+  .then(car => {
+    res.status(201).json(car.apiRepr());
+  })
 })
 app.delete('/cars/:id', (req, res) => {
-  //deletes the specified car
   //linked to delete button
   //will require user to be logged in
+  CarListing
+  .findByIdAndRemove(req.params.id)
+  .exec()
+  .then(() => {
+    res.status(204).json('Deleted')
+  })
 })
 
 
-
-
-
-
-
-
+// app.post('/cars/random', (req, res) => {
+//   CarListing
+//   .create({make: makeGenerator(), model: modelGenerator(), year: yearGenerator(), price: priceGenerator(), photo: req.body.photo})
+//   .then(car => {
+//     res.status(201).json(car);
+//   })
+// })
 
 app.use('*', function(req, res) {
   res.status(404).json({message: 'Not Found'});

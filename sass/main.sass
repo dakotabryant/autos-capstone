@@ -1,0 +1,54 @@
+*
+  transition: ease-in-out .2s
+=desktop()
+  @media screen and (min-width: 990px)
+    @content
+=ultra()
+  @media screen and (min-width: 1921px)
+    @content
+=mobile()
+  @media screen and (max-width: 989px)
+    @content
+=laptop()
+  @media screen and (min-width: 990px) and (max-width: 1412px)
+    @content
+=tablet()
+  @media screen and (max-width: 990px) and (min-width: 550px)
+    @content
+
+// Color Variables
+
+
+
+
+
+// Styling Classes
+
+.uppercase
+  text-transform: uppercase
+$ff: 'ff-good-headline-web-pro-con'
+
+
+// CSS imports
+
+@import header
+@import inventory
+
+
+
+//font import
+
+@import url('https://fonts.googleapis.com/css?family=Fjalla+One|Montserrat|Roboto+Condensed')
+
+@font-face
+  font-family: 'BTC'
+  src: url('assets/brushtip-C TRIAL/BTCTRIAL.ttf')
+
+// Global Styles
+
+body
+  font-family: 'Roboto Condensed', sans-serif
+  padding: 0
+  margin: 0
+  text-align: center
+  box-sizing: border-box

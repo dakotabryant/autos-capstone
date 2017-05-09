@@ -3,15 +3,14 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const mongoose = require('mongoose');
 chai.should();
-
 const {
 	runServer,
   app,
   closeServer
-} = require('../server');
+} = require('../server.js');
 const {
 	CarListing
-} = require('../models');
+} = require('../models.js');
 const {
 	DATABASE_URL
 } = require('../config.js');
@@ -19,7 +18,15 @@ const {
 chai.use(chaiHttp);
 
 describe('Autos.com testing suite', function() {
-    it('true should be true', function() {
-      return true.should.be.true;
-    });
+
+		describe('GET endpoints', function() {
+			it('should return the full list of cars available', function() {
+				return chai.request(app)
+				.get('/cars')
+				.then(function(res) {
+					res.status.should.be(200);
+				})
+				.done();
+			})
+		});
 });
