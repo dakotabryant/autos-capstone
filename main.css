@@ -7,20 +7,52 @@
 
 header {
   height: 90px;
-  background-color: black; }
+  background-color: #072836;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center; }
   header .logo {
-    color: white;
     position: absolute;
-    top: 35px;
-    left: 25px; }
+    left: 0;
+    margin-left: 25px;
+    color: white;
+    font-size: 50px; }
+  header button {
+    background-color: transparent;
+    border: 3px solid white;
+    color: white;
+    font-weight: bold;
+    height: 50px;
+    margin-right: 25px;
+    border-radius: 5px; }
+    header button:hover {
+      color: #072836;
+      cursor: pointer;
+      background-color: white; }
 
 .inventory-container {
-  margin-top: 50px; }
-  .inventory-container .inventory-row {
+  color: #072836;
+  margin-top: 50px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around; }
+  .inventory-container .car-container {
+    border: 4px solid #072836;
+    min-width: 350px;
+    min-height: 300px;
+    margin: 25px auto;
     display: flex;
-    justify-content: space-around; }
-    .inventory-container .inventory-row .car-container img {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    cursor: pointer; }
+    .inventory-container .car-container img {
       width: 150px; }
+    .inventory-container .car-container p {
+      font-size: 20px; }
+    .inventory-container .car-container .price {
+      font-weight: bold; }
 
 @font-face {
   font-family: 'BTC';
@@ -32,3 +64,5 @@ body {
   margin: 0;
   text-align: center;
   box-sizing: border-box; }
+  body .hidden {
+    display: none; }

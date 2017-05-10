@@ -154,13 +154,13 @@ app.delete('/cars/:id', (req, res) => {
 })
 
 
-// app.post('/cars/random', (req, res) => {
-//   CarListing
-//   .create({make: makeGenerator(), model: modelGenerator(), year: yearGenerator(), price: priceGenerator(), photo: req.body.photo})
-//   .then(car => {
-//     res.status(201).json(car);
-//   })
-// })
+app.post('/cars/random', (req, res) => {
+  CarListing
+  .create({make: makeGenerator(), model: modelGenerator(), year: yearGenerator(), price: priceGenerator(), photo: req.body.photo})
+  .then(car => {
+    res.status(201).json(car);
+  })
+})
 
 app.use('*', function(req, res) {
 	res.status(404).json({
@@ -169,6 +169,7 @@ app.use('*', function(req, res) {
 });
 
 let server;
+
 
 function runServer(databaseUrl = DATABASE_URL, port = PORT) {
 	return new Promise((resolve, reject) => {
