@@ -2,6 +2,7 @@ const mocha = require('mocha');
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const mongoose = require('mongoose');
+const cors = require('cors');
 chai.should();
 const {
 	runServer,
