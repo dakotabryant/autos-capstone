@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,19 +8,27 @@
   <link rel="stylesheet" href="main.css">
   <title>Document</title>
 </head>
+
 <body>
   <header>
     <span class="logo">Autos.com</span>
-    <button type="button" name="button">Create New Listing</button>
+    <button type="button" name="button" id="create">Create New Listing</button>
   </header>
+  <div class="overlay hidden"> </div>
+  <div class="new-listing hidden">
+    <h2>Create a new listing</h2>
+    <input class="submit-make" type="text" name="" value=""  placeholder="Make">
+    <input class="submit-model" type="text" name="" value="" placeholder="Model">
+    <input class="submit-year" type="text" name="" value="" placeholder="Year">
+    <input class="submit-price" type="text" name="" value="" placeholder="Price">
+    <button type="button" name="button" id="submit-create">Submit Listing</button>
+  </div>
   <section class="inventory-container">
 
 
   </section>
-  <script
-    src="https://code.jquery.com/jquery-3.2.1.min.js"
-    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-    crossorigin="anonymous"></script>
-<script src="scripts/app.js" charset="utf-8"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="scripts/app.js" charset="utf-8"></script>
 </body>
+
 </html>
