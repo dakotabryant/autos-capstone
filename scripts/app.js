@@ -58,7 +58,6 @@ $(document).ready(function() {
 			})
 			.then(res => {
 				if (res.status === 201) {
-					getData(endpointURL)
 					renderCars();
 					console.log('I sent the request');
 				} else {
@@ -76,7 +75,6 @@ $(document).ready(function() {
 			})
 			.then(res => {
 				if (res.status === 204) {
-					getData(endpointURL)
 					renderCars();
 				}
 			})
@@ -89,7 +87,7 @@ $(document).ready(function() {
 	//post handler
 	$('#submit-create').on('click', function(e) {
 		$('.overlay, .new-listing').toggleClass('hidden');
-		$('body').css('overflow', 'auto');
+		$('body').css('overflow', 'scroll');
 		let inputFinder = $(e.target).closest('div');
 		let newObject = {
 			make: inputFinder.find('.submit-make').val(),
@@ -106,7 +104,6 @@ $(document).ready(function() {
 				body: JSON.stringify(newObject)
 			})
 			.then(res => {
-				getData(endpointURL)
 				renderCars();
 			})
 	})

@@ -98,7 +98,7 @@ describe('Autos.com testing suite', function() {
 		});
 	});
 	describe('POST endpoints', function () {
-		it.only('should add a car listing to the db', function () {
+		it('should add a car listing to the db', function () {
 			const newPost = generateCarPost();
 			return chai.request(app)
 				.post('/cars')
@@ -115,7 +115,7 @@ describe('Autos.com testing suite', function() {
 	});
 
 	describe('PUT endpoints', function () {
-		it.only('should update fields you send over', function () {
+		it('should update fields you send over', function () {
 			const updateData = {
 				make: makeGenerator()
 			};
@@ -139,7 +139,7 @@ describe('Autos.com testing suite', function() {
 	});
 
 	describe('DELETE endpoints', function () {
-		it.only('it should delete car', function () {
+		it('it should delete car', function () {
 			let car;
 			return CarListing
 				.findOne()
