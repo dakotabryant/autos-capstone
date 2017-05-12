@@ -14,15 +14,20 @@ function renderCars() {
 			$('.inventory-container').html('');
 			cars.forEach(car => {
 				let carTemplate = `<div class="car-container" data-id="${car._id}">
-                            <img src="assets/images/car.jpg" alt="">
-                            <input class="hidden input-year edits" type="text" name="" value="${car.year}">
-                            <input class="hidden input-make edits" type="text" name="" value="${car.make}">
-                            <input class="hidden input-model edits" type="text" name="" value="${car.model}">
+                            <img src="${car.photo}" alt="">
+
                             <p class="make-model">${car.year} ${car.make} ${car.model}</p>
-                            <p class="price">$${car.price}</p>
-                            <input class="hidden input-price edits" type="text" name="" value="${car.price}">
-                            <button class="hidden submit edits" type="button" name="button">Save Edits</button>
-                            <button class="hidden delete" type="button" name="button">Delete</button></div>`
+                            <div class="price-container"><p class="price">$${car.price}</p>
+														<button class="edit-button" type="button" name="button">Edit Listing</button></div>
+														<div class="input-container hidden">
+														<input onClick="this.select();" class="input-photo edits" type="text" name="" value="${car.photo}">
+														<input onClick="this.select();" class="input-year edits" type="text" name="" value="${car.year}">
+                            <input onClick="this.select();" class="input-make edits" type="text" name="" value="${car.make}">
+                            <input onClick="this.select();" class="input-model edits" type="text" name="" value="${car.model}">
+                            <input onClick="this.select();" class="input-price edits" type="text" name="" value="${car.price}">
+														<button class="submit edits" type="button" name="button">Save Edits</button>
+                            <button class="delete" type="button" name="button">Delete</button></div>
+                            </div>`
 				$('.inventory-container').append(carTemplate);
 
 			})
@@ -31,22 +36,25 @@ function renderCars() {
 
 $(document).ready(function() {
 	renderCars()
-	$('.inventory-container').on('click', 'div.car-container', function() {
-		$(this).children('.hidden').toggleClass('hidden');
-		$(this).children('p').toggleClass('hidden');
+	$('.inventory-container').on('click', '.edit-button', function() {
+		$(this).parents('div').siblings('.input-container').toggleClass('hidden');
+		$(this).parents('div').siblings('p').toggleClass('hidden');
+		$(this).parents('.price-container').toggleClass('hidden');
 	})
 
 	//PUT event listeners
 	$('.inventory-container').on('click', 'button.submit', function(e) {
+		e.preventDefault();
 		$(this).toggleClass('hidden');
-		$(this).siblings('.edits').toggleClass('hidden');
+		$(e.target).closest('input-container').toggleClass('hidden');
 		let elementId = $(this).parents('.car-container').attr('data-id');
 		let inputFinder = $(e.target).closest('div');
 		let newObject = {
 			make: inputFinder.find('.input-make').val(),
 			model: inputFinder.find('.input-model').val(),
 			price: inputFinder.find('.input-price').val(),
-			year: inputFinder.find('.input-year').val()
+			year: inputFinder.find('.input-year').val(),
+			photo: inputFinder.find('.input-photo').val()
 		};
 		fetch(`http://localhost:8080/cars/${elementId}`, {
 				method: 'PUT',
@@ -68,7 +76,7 @@ $(document).ready(function() {
 	});
 	//delete handler
 	$('.inventory-container').on('click', 'button.delete', function() {
-		$(this).siblings('.edits').toggleClass('hidden')
+		$(this).parents('.input-container').toggleClass('hidden')
 		let elementId = $(this).parents('.car-container').attr('data-id');
 		fetch(`http://localhost:8080/cars/${elementId}`, {
 				method: 'DELETE'
@@ -82,18 +90,21 @@ $(document).ready(function() {
 	//modal handler
 	$('#create').on('click', function() {
 		$('.overlay, .new-listing').toggleClass('hidden');
-		$('body').css('overflow', 'hidden')
+		$('body').css('overflow', 'hidden');
+
 	})
 	//post handler
 	$('#submit-create').on('click', function(e) {
 		$('.overlay, .new-listing').toggleClass('hidden');
 		$('body').css('overflow', 'scroll');
+
 		let inputFinder = $(e.target).closest('div');
 		let newObject = {
 			make: inputFinder.find('.submit-make').val(),
 			model: inputFinder.find('.submit-model').val(),
 			price: inputFinder.find('.submit-price').val(),
-			year: inputFinder.find('.submit-year').val()
+			year: inputFinder.find('.submit-year').val(),
+			photo: inputFinder.find('.submit-photo').val()
 		};
 		fetch(`http://localhost:8080/cars`, {
 				method: 'POST',

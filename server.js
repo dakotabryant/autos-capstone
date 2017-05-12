@@ -26,9 +26,9 @@ app.use(bodyParser.json());
 app.use(cors());
 
 app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+	next();
 });
 mongoose.Promise = global.Promise;
 
@@ -100,13 +100,15 @@ app.post('/cars', (req, res) => {
 			return res.status(400).send(message);
 		}
 	}
+	let photoUrl;
+	req.body.photo ? photoUrl = req.body.photo : photoUrl = 'assets/images/car.jpg'
 	CarListing
 		.create({
 			make: req.body.make,
 			model: req.body.model,
 			year: req.body.year,
 			price: req.body.price,
-			photo: req.body.photo
+			photo: photoUrl
 		})
 		.then(car => {
 			res.json(car);
@@ -158,11 +160,17 @@ app.delete('/cars/:id', (req, res) => {
 
 
 app.post('/cars/random', (req, res) => {
-  CarListing
-  .create({make: makeGenerator(), model: modelGenerator(), year: yearGenerator(), price: priceGenerator(), photo: req.body.photo})
-  .then(car => {
-    res.status(201).json(car);
-  })
+	CarListing
+		.create({
+			make: makeGenerator(),
+			model: modelGenerator(),
+			year: yearGenerator(),
+			price: priceGenerator(),
+			photo: req.body.photo
+		})
+		.then(car => {
+			res.status(201).json(car);
+		})
 })
 
 app.use('*', function(req, res) {
